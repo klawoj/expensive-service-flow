@@ -1,5 +1,5 @@
 
-name := "senti1"
+name := "expensive-service-flow"
 
 version := "0.1"
 
@@ -15,14 +15,14 @@ lazy val senti1 = project
   .in(file("."))
   .settings(
     scalaVersion := "2.12.2",
-    name := "senti1-queues",
+    name := "expensive-service-flow",
     organization := "pl.klawoj",
     libraryDependencies ++= {
       Seq(
 
         "com.typesafe.akka" %% "akka-actor" % akkaV,
         "com.typesafe.akka" %% "akka-stream" % akkaV,
-
+        "com.typesafe.akka" %% "akka-stream-contrib" % "0.9",
 
         "com.typesafe.akka" %% "akka-testkit" % akkaV % Test,
         "com.typesafe.akka" %% "akka-stream-testkit" % akkaV % Test,
