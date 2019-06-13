@@ -31,6 +31,6 @@ sealed trait ExpensiveServiceResponse
 case class Error(errorCode: Int) extends ExpensiveServiceResponse
 case class Ok(result: TaskResult) extends ExpensiveServiceResponse
 
-case class TaskResult(task: Task, result: String)
+case class TaskResult(task: TaskDefinition, result: String)
 
 case class Ack(id: String)

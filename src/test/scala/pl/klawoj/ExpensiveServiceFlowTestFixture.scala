@@ -18,7 +18,7 @@ trait ExpensiveServiceFlowTestFixture {
 
   val priorityFromId: Int => Int = id => id % 3 + 1
 
-  val alwaysSuccessfulService: Task => Ok = t => Ok(TaskResult(t, t.id))
+  val alwaysSuccessfulService: Task => Ok = t => Ok(TaskResult(t.definition, t.id))
 
   def assertAcksMatchesResults(acked: immutable.Seq[Ack], results: immutable.Seq[TaskResult]) = {
     assert(acked.zip(results).forall { case (ack, result) => ack.id == result.task.id })
@@ -53,7 +53,7 @@ trait ExpensiveServiceFlowTestFixture {
 
         lastRequest = Some(instant)
 
-        Ok(TaskResult(t, t.id))
+        Ok(TaskResult(t.definition, t.id))
       }
     }
   }
