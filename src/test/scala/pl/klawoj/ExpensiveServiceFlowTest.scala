@@ -4,7 +4,6 @@ import java.time.Duration
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import akka.stream.scaladsl.Source
 import akka.stream.testkit.scaladsl.TestSink
 import akka.testkit.TestKit
 import org.scalatest.{GivenWhenThen, WordSpecLike}
@@ -45,7 +44,7 @@ class ExpensiveServiceFlowTest extends TestKit(ActorSystem("test"))
     }
 
     "slow down when required, but still complete all the requests" in {
-      val tasks = Source.fromIterator(() => Iterator.from(0)).take(13).map(id => Task(id.toString, priorityFromId(id)))
+      val tasks = taskInfiniteSourceWithIdBasedAndUniformlyDistributedPriorites
 
       val service: Task => ExpensiveServiceResponse = rateLimitedService(Duration.ofSeconds(1))
 
@@ -66,7 +65,7 @@ class ExpensiveServiceFlowTest extends TestKit(ActorSystem("test"))
 
       val contract = RequestsContract(10, Duration.ofSeconds(3))
 
-      val tasks = Source.fromIterator(() => Iterator.from(0)).map(id => Task(id.toString, priorityFromId(id)))
+      val tasks = taskInfiniteSourceWithIdBasedAndUniformlyDistributedPriorites
 
       val service: Task => ExpensiveServiceResponse = alwaysSuccessfulService
 
